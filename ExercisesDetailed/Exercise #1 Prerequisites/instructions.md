@@ -6,25 +6,11 @@ Set up the lab environment.
 
 ## Expected Results
 
-Laptop configured with Cloud Foundry CLI, Visual Studio Code, .NET Core SDK. PWS account created and Spring Cloud Services instance deployed.
+Laptop configured with Cloud Foundry CLI, Visual Studio Code, .NET Core SDK.
 
 ## Introduction
 
 In this exercise, we'll set up our workstation and cloud environment so that we're ready to build and run modern .NET applications. Your instructor will provide the url and credentials for the Pivotal Cloud Foundry (PCF) instance you will be using.
-
-Alternatively, you can sign up for a trial account of the hosted version of PCF, called Pivotal Web Services:
-
-1. Go to <http://run.pivotal.io> and choose "sign up for free."
-
-2. Click "create account" link on sign up page.
-
-3. Fill in details.
-
-4. Go to email account provided and click on verification email link.
-
-5. Click on "claim free trial" link and provide phone number.
-
-6. Validate your account and create your organization.
 
 ## Package manager
 
@@ -46,7 +32,7 @@ We suggest using a package manager to install bootcamp software.  Alternatively 
 
 You can interact with Cloud Foundry via Dashboard, REST API, or command line interface (CLI). Here, we install the CLI and ensure it's configured correctly.
 
-- Windows:
+- **Windows**:
 
     ```Windows
     choco install cloudfoundry-cli
@@ -85,9 +71,9 @@ Confirm that it installed successfully by going to a command line, and typing:
 
 1. Visit <https://www.microsoft.com/net/download> to download and install the latest version of the .NET Core Runtime and SDK.
 
-    ***.NET Core Version 2.1.x is required for this workshop***
+    ***.NET Core Version 2.1.x or later is required for this workshop. For consistency we recommend every attendee have the latest release (2.2.3 as of 3/13/2019)***
 
-2. Confirm that it installed correctly by opening a command line and typing:
+2. Confirm that the runtime is installed correctly by opening a command line and typing:
 
     ```Windows
     dotnet --version
@@ -99,4 +85,6 @@ Confirm that it installed successfully by going to a command line, and typing:
 
 5. Search for C# and choose the top C# for Visual Studio Code option and click `Install`. This gives you type-ahead support for C#.
 
-6. In the Terminal, type in `cf login -a <PCF API url>` and provide your credentials. Now you are connected to Pivotal Cloud Foundry.  Note the `-a` flag corresponds to the api endpoint of your instance of Pivotal Cloud Foundry.
+## Login into the Cloud Foundry CLI and target your Foundation
+
+1. In the Terminal, type in `cf login -a api.sys.dev.aws.warroyo.com --skip-ssl-validation` and provide your credentials (these credentials will be provided during the workshop). Now you are connected to Pivotal Cloud Foundry.  Note the `-a` flag corresponds to the api endpoint of your instance of Pivotal Cloud Foundry.  Since this is a POC environment, certificates have not been installed and we include the `--skip-ssl-validation` flag
