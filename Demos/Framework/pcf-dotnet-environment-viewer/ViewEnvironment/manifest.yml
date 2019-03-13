@@ -1,0 +1,7 @@
+---
+applications:
+- name: dotnet
+  random-route: true
+  memory: 512m
+  stack: windows2016
+  buildpack: hwc_buildpack
