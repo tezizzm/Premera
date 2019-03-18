@@ -16,7 +16,7 @@ In this exercise we explore how Configuration Server pulls configuration from a 
 
 Spring Cloud Services wrap up key Spring Cloud projects with managed capabilities.
 
-1. Clone the repository located at <https://github.com/tezizzm/MicronWorkshop>.  Navigate to the Exercise Files > Exercise #2 Configuration folder.
+1. Clone the repository located at <https://github.com/tezizzm/Premera>.  Navigate to the Exercise Files > Exercise #2 Configuration folder.
 
 2. From powershell run the create-service.bat file.  This will create an instance of Configuration Server.  *Note the actual name of the configuration server in your Pivotal Cloud Foundry installation may be different.  To see the name of the installed services in your installation run the following command `cf marketplace`.  If it is different take note of the name and update the create-service.bat file accordingly*
 
