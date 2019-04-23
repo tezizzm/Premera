@@ -16,8 +16,8 @@ This exercise helps us understand how to wrap our external calls in Hystrix Comm
 
     ```xml
     <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
-    <PackageReference Include="Steeltoe.CircuitBreaker.Hystrix.MetricsStreamCore" Version="2.1.0" />
-    <PackageReference Include="Steeltoe.CircuitBreaker.HystrixCore" Version="2.1.0" />
+    <PackageReference Include="Steeltoe.CircuitBreaker.Hystrix.MetricsStreamCore" Version="2.1.1" />
+    <PackageReference Include="Steeltoe.CircuitBreaker.HystrixCore" Version="2.1.1" />
     ```
 
 2. In the root of the project create a file called ProductService.cs with the below implementation.  This class will act as an abstraction to our product retrieval from our products API.  The logic for retrieving products has been moved to our RunAsync method and there is now a method to return placeholder values from the RunFallbackAsync method in cases of failures.

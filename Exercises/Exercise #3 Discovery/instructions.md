@@ -42,7 +42,8 @@ This exercise helps us understand how to register our microservices with the Spr
     "eureka": {
       "client": {
           "shouldRegisterWithEureka": true,
-          "shouldFetchRegistry": true
+          "shouldFetchRegistry": false,
+          "validateCertificates" : false
       }
     }
     ```
@@ -65,7 +66,7 @@ This exercise helps us understand how to register our microservices with the Spr
 
 We now change focus to a front end application that discovers our products API microservice.
 
-1. Create a directory for our new API with the following command:  `mkdir bootcamp-store`
+1. Navigate to the workspace root.  Create a directory for our new UI with the following command:  `mkdir bootcamp-store`
 
 2. Navigate to the newly created directory using the following command: `cd bootcamp-store`
 
@@ -84,6 +85,7 @@ We now change focus to a front end application that discovers our products API m
     ```c#
     using Steeltoe.Extensions.Configuration.CloudFoundry;
     ```
+
     ```c#
     public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
         WebHost.CreateDefaultBuilder(args)
@@ -104,11 +106,21 @@ We now change focus to a front end application that discovers our products API m
     services.AddDiscoveryClient(Configuration);
     ```
 
+    The workshop was built and tested against .NET Core and ASP.NET CORE 2.1. If you have a newer version of the SDK installed it may be necessary to modify the compatibility version of the application as follows:
+
+    ```c#
+    // change to following line of code
+    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+    //to
+    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+    ```
+
 8. In the Configure method add the following code to configure the discovery client middleware.
 
     ```c#
     app.UseDiscoveryClient();
     ```
+
 9. Edit the HomeController.cs class to retrieve our products from the API. First add the appropriate using statements to bring in namespace references.  Then notice the `DiscoveryHttpClientHandler` property.  It maps our call to a discovered service instance and then completes the service request.  Once the request is complete we log the results and pass the data on to our view for display.  In this case the view is an MVC view, you can read more about views [here](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/overview?view=aspnetcore-2.1).  Once complete the file should look like the following:
 
     ```c#
@@ -153,6 +165,7 @@ We now change focus to a front end application that discovers our products API m
             }
         }
     ```
+
     **Take note of the url format (<https://dotnet-core-api/api/products>) of the external API call.**
 
 10. Navigate to the views folder and edit the View file named Index.cshtml file to match the below snippet.  This file uses a mix of html and Razor syntax to iterate over and display the products returned from the Products API.  You can read about Razor Syntax [here](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/razor?view=aspnetcore-2.1)
@@ -185,29 +198,36 @@ We now change focus to a front end application that discovers our products API m
         }
     </div>
     ```
+
 11. In the root directory navigate to the appsettings.json file and add an entry for eureka like follows.  Notice since we are consuming the service we do not register with Eureka.
 
     ```json
-    "eureka": {
-      "client": {
-          "shouldRegisterWithEureka": false,
-          "shouldFetchRegistry": true
+    "spring": {
+      "application": {
+        "name" : "ui"
+      },
+      "eureka": {
+        "client": {
+            "shouldRegisterWithEureka": false,
+            "shouldFetchRegistry": true,
+            "validateCertificates": false
+        }
       }
     }
     ```
 
-12. You are ready to now “push” your application.  Create a file at the root of your application name it manifest.yml and edit it as follows:
+12. You are ready to now “push” your application.  Create a file at the root of your application name it manifest.yml and edit it as follows:  **Note due to formatting issues simply copying the below manifest file may produce errors due to the nature of yaml formatting.  Use the CloudFoundry extension recommend in exercise 1 to assist in the correct formatting**
 
     ```yml
     ---
-        applications:
-        - name: dotnet-core-ui
-        buildpack: https://github.com/cloudfoundry/dotnet-core-buildpack
-        random-route: true
-        instances: 1
-        memory: 256M
-        services:
-        - myDiscoveryService
+    applications:
+    - name: dotnet-core-ui
+    buildpack: https://github.com/cloudfoundry/dotnet-core-buildpack
+    random-route: true
+    instances: 1
+    memory: 256M
+    services:
+    - myDiscoveryService
     ```
 
 13. Run the cf push command to build, stage and run your application on PCF.  Ensure you are in the same directory as your manifest file and type `cf push`.

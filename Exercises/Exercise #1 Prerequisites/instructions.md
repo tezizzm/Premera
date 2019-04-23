@@ -85,6 +85,8 @@ Confirm that it installed successfully by going to a command line, and typing:
 
 5. Search for C# and choose the top C# for Visual Studio Code option and click `Install`. This gives you type-ahead support for C#.
 
+6. *(Optional) Search for 'cloudfoundry' and choose the entry for 'Cloudfoundry Manifest YML Support' and click `Install`. This extension is highly recommended and provides basic validation, content assist and hover infos for editing Cloud Foundry Manifest Files*
+
 ## Login into the Cloud Foundry CLI and target your Foundation
 
 1. In the Terminal, type in `cf login -a api.sys.dev.aws.warroyo.com --skip-ssl-validation` and provide your credentials (these credentials will be provided during the workshop). Now you are connected to Pivotal Cloud Foundry.  Note the `-a` flag corresponds to the api endpoint of your instance of Pivotal Cloud Foundry.  Since this is a POC environment, certificates have not been installed and we include the `--skip-ssl-validation` flag
