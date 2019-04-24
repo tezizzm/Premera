@@ -183,14 +183,16 @@ This exercise helps us understand how to wrap our external calls in Hystrix Comm
 
 *Optional: Explore advanced features of the Circuit Breaker:*
 
-1. From Apps Manager stop the API application.  Once the API application has been stopped navigate to the UI application and refresh the page a couple of times.  Notice that the product listing has changed (the products are being loaded from the fallback method).  Also go back to the Circuit Breaker service and click Manage to see the circuit health.  
+1. We will be using an HTTP Load Generator called Hey to achieve a sizable amount of load against our application.  Download the Hey Windows [release](https://storage.googleapis.com/jblabs/dist/hey_win_v0.1.2.exe).  Documentation on the hey can be found on [Github](https://github.com/rakyll/hey)
 
-2. Things to note: all calls should now be failing.  Note that once the threshold has been hit calls completely bypass the initial call and immediately go to the fallback method.
+2. It is recommended that you add Hey to your path and for ease in using the command rename the executable from 'hey_win_v0.1.2.exe' to 'hey'.  *Reach out to one of the instructors if you need assistance with adding the executable to the path.*
 
-3. Restart the API application.
+3. Run the following command to begin hitting our UI with load. *Note you will have to edit the host name in angle brackets to match that of your UI application*:
 
-4. Navigate to the Service folder inside the bootcamp-store folder.  Take note of the ProductService.cs file, within it you will find the definition of the ProductService which is a HystixCommand.  There are two protected methods RunAsync and RunFallbackAsync that implement the external call and fallback call respectively.
+    ```ps
+        hey -c 12 -z 60s https://<ui-host-name>.apps.dev.aws.warroyo.com
+    ```
 
-5. In the ProductService class add logic to raise an exception (ie. new Exception()) in the RunAsync method every fifth call prior to the code that calls the external service.  Once complete re-push the application.
+4. While the hey command is generating load, go back to the application UI and refresh to see the fallback logic in action.  Also view the Circuit and take note of the pass through calls being made.
 
-6. Once the UI application has been updated use a tool (Postman, curl, etc) to hit the UI URL a large number of times.  You should notice over the course of monitoring that the Circuit should go between closed and opened as the health changes overtime.
+5. Confirm that the hey command is complete and that the circuit has reentered a healthy state.  Now refresh the application UI to see the standard response.
