@@ -189,7 +189,7 @@ This exercise helps us understand how to wrap our external calls in Hystrix Comm
 
 3. Run the following command to begin hitting our UI with load. *Note you will have to edit the host name in angle brackets to match that of your UI application*:
 
-    ```ps
+    ```
         hey -c 12 -z 60s https://<ui-host-name>.apps.dev.aws.warroyo.com
     ```
 
